@@ -3,33 +3,42 @@
 import React from 'react';
 import { Button } from "antd";
 import "antd/dist/antd.css";
-import '../scss/counter-obj.scss'
+// A partir da raiz.
+import '../scss/counter-obj.scss';
 import Reward from 'react-rewards';
 
-// Destructuring
+// Destructuring.
 import { CounterObj } from '../components/counter-obj';
 
 export default class Counter extends React.Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            counter: 0,
-            maxCount: 10,
-            minCount: 0,
-            resetBtn: false
-        };
+    /**
+     * State.
+     */
+
+    state = {
+        counter: 0,
+        maxCount: 10,
+        minCount: 0,
+        resetBtn: false
     }
 
-    handleReset = () => {
+    /**
+     * Handle reset.
+     */
 
+    handleReset = () => {
         this.setState(state => ({
-            //counter: state.counter + props.increment
             counter: state.minCount
         }));
     }
 
+    /**
+     * Animation in.
+     */
+
     animationIn = () => {
+
         const num = document.querySelector('.counter-obj__num'),
             bg = document.querySelector('.counter-obj'),
             pinkHeart = document.querySelector('.counter-obj__heart--pink'),
@@ -54,14 +63,16 @@ export default class Counter extends React.Component {
     }
 
     handleIncrement = () => {
+        // Destructuring
+        const { counter, maxCount } = this.state;
+        const counterNewVal = counter < maxCount ? counter + 1 : maxCount;
 
         this.animationIn();
 
-        this.setState(state => ({
-            //counter: state.counter + 1,
-            counter: state.counter < state.maxCount ? state.counter + 1 : state.maxCount,
+        this.setState({
+            counter: counterNewVal,
             resetBtn: true
-        }));
+        });
 
         console.log(this.state.counter);
 
