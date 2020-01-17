@@ -51,6 +51,9 @@ body {
             top:calc(50% - 29px/2);
             left:calc(50% - 32px/2);
             z-index:2;
+                img {
+                    display: inherit;
+                }
                 &--pink {
                     &.hide {
                         display:none;

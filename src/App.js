@@ -1,12 +1,23 @@
-import React from 'react';
-import Counter from './components/counter';
 
-function App() {
-  return (
-    <div className="App">
-      <Counter></Counter>
-    </div >
-  );
-}
+/**
+ * Module dependencies.
+ */
+
+import Counter from './components/counter';
+import React from 'react';
+
+/**
+ * `App`.
+ */
+
+const App = () => (
+  <div className={'App'}>
+    <Counter />
+  </div >
+);
+
+/**
+ * Export `App`.
+ */
 
 export default App;

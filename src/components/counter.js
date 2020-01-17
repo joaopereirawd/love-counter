@@ -1,22 +1,27 @@
-//https://reactjs.org/docs/state-and-lifecycle.html
 
-import React from 'react';
-import { Button } from "antd";
-import "antd/dist/antd.css";
-// A partir da raiz.
+/**
+ * Module dependencies.
+ */
+
 import '../scss/counter-obj.scss';
+import "antd/dist/antd.css";
+import { Button } from "antd";
+import { CounterObj } from '../components/counter-obj';
+import React, { Component } from 'react';
 import Reward from 'react-rewards';
 
-// Destructuring.
-import { CounterObj } from '../components/counter-obj';
+/**
+ * Export `Counter`.
+ */
 
-export default class Counter extends React.Component {
+export default class Counter extends Component {
 
     /**
      * State.
      */
 
     state = {
+        animationIn: false,
         counter: 0,
         maxCount: 10,
         minCount: 0,
@@ -28,110 +33,83 @@ export default class Counter extends React.Component {
      */
 
     handleReset = () => {
-        this.setState(state => ({
-            counter: state.minCount
-        }));
+        const { minCount: counter } = this.state;
+        this.setState({ counter });
     }
 
     /**
-     * Animation in.
+     * Handle increment.
      */
 
-    animationIn = () => {
-
-        const num = document.querySelector('.counter-obj__num'),
-            bg = document.querySelector('.counter-obj'),
-            pinkHeart = document.querySelector('.counter-obj__heart--pink'),
-            whiteHeart = document.querySelector('.counter-obj__heart--white');
-
-        num.classList.add("show");
-        bg.classList.add("animated-in");
-        pinkHeart.classList.add('hide');
-        whiteHeart.classList.add('show');
-    }
-
-    animationOut = () => {
-        const num = document.querySelector('.counter-obj__num'),
-            bg = document.querySelector('.counter-obj'),
-            pinkHeart = document.querySelector('.counter-obj__heart--pink'),
-            whiteHeart = document.querySelector('.counter-obj__heart--white');
-
-        num.classList.add("show");
-        pinkHeart.classList.remove('hide');
-        whiteHeart.classList.remove('show');
-        bg.classList.remove("animated-in");
-    }
-
     handleIncrement = () => {
-        // Destructuring
+        // Destructuring.
         const { counter, maxCount } = this.state;
         const counterNewVal = counter < maxCount ? counter + 1 : maxCount;
 
-        this.animationIn();
-
+        // Update state.
         this.setState({
             counter: counterNewVal,
-            resetBtn: true
+            resetBtn: true,
+            animationIn: true
         });
-
-        console.log(this.state.counter);
-
-        //confetti explosion
-        if (this.state.counter === 9) {
-            this.reward.rewardMe();
-        }
     }
+
+    /**
+     * Handle decrement.
+     */
 
     handleDecrement = () => {
+        const { counter, minCount } = this.state;
+        const newMinVal = counter > minCount ? counter - 1 : minCount;
 
-        this.setState(state => ({
-            //counter: this.state.counter - 1, 
-            counter: state.counter > state.minCount ? state.counter - 1 : state.minCount
-        }));
-
-        this.animationOut();
-
+        this.setState({
+            counter: newMinVal,
+            animationIn: false
+        });
     }
 
+    /**
+     * Render.
+     */
+
     render() {
+        const { animationIn, counter, resetBtn } = this.state;
+
         return (
-            <div className="counter-wrapper">
+            <div className={'counter-wrapper'}>
+                <CounterObj
+                    animationIn={animationIn}
+                    counter={counter}
+                />
 
-                <CounterObj counter={this.state.counter}>
-                    <Reward
-                        ref={(ref) => { this.reward = ref }}
-                        type='confetti'
-                    >
-                    </Reward>
-                </CounterObj>
-
-                <div className="button-group">
+                <div className={'button-group'}>
                     <Button
-                        className="button-group__btns add-btn"
-                        type="primary"
+                        className={'button-group__btns add-btn'}
                         onClick={this.handleIncrement}
+                        type={'primary'}
                     >
-                        <span>+</span>
+                        <span>{'+'}</span>
                     </Button>
 
                     <Button
-                        className="button-group__btns dec-btn"
-                        type="primary"
+                        className={'button-group__btns dec-btn'}
                         onClick={this.handleDecrement}
+                        type={'primary'}
                     >
-                        <span>-</span>
+                        <span>{'-'}</span>
                     </Button>
 
                     <div
-                        className="reset-btn"
+                        className={'reset-btn'}
                         onClick={this.handleReset}
-                        style={{ visibility: `${this.state.resetBtn !== false ? 'visible' : 'hidden'}` }}
+                        style={{ visibility: `${resetBtn !== false ? 'visible' : 'hidden'}` }}
                     >
-                        <span>Reset</span>
+                        <span>{'Reset'}</span>
                     </div>
                 </div>
             </div>
         );
     }
+
 }
 

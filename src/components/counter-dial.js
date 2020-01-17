@@ -1,12 +1,16 @@
+
+/**
+ * Module dependencies.
+ */
+
 import React from 'react';
 
-// https://reactjs.org/docs/composition-vs-inheritance.html
-// https://codepen.io/gaearon/pen/ozqNOV?editors=0010
+/**
+ * Export `CounterDial`.
+ */
 
-export const CounterDial = ({ counter }) => {
-    return (
-        <span className="counter-obj__num">
-            {counter}
-        </span>
-    );
-};
+export const CounterDial = ({ counter, animationIn }) => (
+    <span className={`counter-obj__num ${animationIn ? 'show' : ''}`}>
+        {counter}
+    </span>
+);
