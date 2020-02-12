@@ -27,11 +27,11 @@ export const CounterObj = ({ counter, animationIn }) => {
     return (
         <div className={`counter-obj ${animationIn ? 'animated-in' : ''}`}>
             <div className={`counter-obj__heart counter-obj__heart--pink ${animationIn ? 'hide' : ''}`}>
-                <img src={pinkHeart} />
+                <img src={pinkHeart} alt="" />
             </div>
 
             <div className={`counter-obj__heart counter-obj__heart--white ${animationIn ? 'show' : ''}`}>
-                <img src={whiteHeart} />
+                <img src={whiteHeart} alt="" />
             </div>
 
             <CounterDial

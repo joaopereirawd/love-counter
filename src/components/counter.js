@@ -8,7 +8,6 @@ import "antd/dist/antd.css";
 import { Button } from "antd";
 import { CounterObj } from '../components/counter-obj';
 import React, { Component } from 'react';
-import Reward from 'react-rewards';
 
 /**
  * Export `Counter`.
@@ -64,7 +63,7 @@ export default class Counter extends Component {
 
         this.setState({
             counter: newMinVal,
-            animationIn: false
+            animationIn: true
         });
     }
 
@@ -74,7 +73,6 @@ export default class Counter extends Component {
 
     render() {
         const { animationIn, counter, resetBtn } = this.state;
-
         return (
             <div className={'counter-wrapper'}>
                 <CounterObj
@@ -87,14 +85,16 @@ export default class Counter extends Component {
                         className={'button-group__btns add-btn'}
                         onClick={this.handleIncrement}
                         type={'primary'}
+                        shape={'circle'}
                     >
                         <span>{'+'}</span>
                     </Button>
 
                     <Button
                         className={'button-group__btns dec-btn'}
-                        onClick={this.handleDecrement}
+                        onClick={counter > 0 ? this.handleDecrement : ''}
                         type={'primary'}
+                        shape="circle"
                     >
                         <span>{'-'}</span>
                     </Button>
